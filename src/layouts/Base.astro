@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE_IDENTITY, SITE_ORIGIN, SITE_STATE } from '../site';
+import { getPublishedWriting } from '../writing';
 
 declare const __GIT_HASH__: string;
 
@@ -17,6 +18,7 @@ const {
 } = Astro.props;
 
 const gitHash = __GIT_HASH__;
+const hasPublishedWriting = (await getPublishedWriting()).length > 0;
 const canonicalPath = currentPath === '/' ? '/' : `${currentPath.replace(/\/$/, '')}/`;
 const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).href;
 ---
@@ -68,7 +70,9 @@ const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).href;
       <div class="nav-links">
         <a href="/" class:list={[{ active: currentPath === '/' }]}>home</a>
         <a href="/about" class:list={[{ active: currentPath === '/about' }]}>about</a>
-        <a href="/writing" class:list={[{ active: currentPath.startsWith('/writing') }]}>writing</a>
+        {hasPublishedWriting && (
+          <a href="/writing" class:list={[{ active: currentPath.startsWith('/writing') }]}>writing</a>
+        )}
       </div>
       <button id="theme-toggle" aria-label="Theme" aria-pressed="false">
         <svg class="icon-dawn" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">

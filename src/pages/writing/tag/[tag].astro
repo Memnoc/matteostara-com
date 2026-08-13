@@ -1,9 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
+import { getPublishedWriting } from '../../../writing';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = await getPublishedWriting();
   const tags = [...new Set(posts.flatMap(p => p.data.tags ?? []))];
   return tags.map(tag => ({
     params: { tag },

@@ -8,18 +8,17 @@ post actually produces a public route.
 
 **Blocked by:** 01 — Establish the production-browser verification seam
 
-**Status:** ready
+**Status:** done
 
-- [ ] The thumbnail test post is removed from production content rather than
+- [x] The thumbnail test post is removed from production content rather than
   hidden behind a runtime condition.
-- [ ] The variable-resolution article is marked draft without rewriting its
+- [x] The variable-resolution article is marked draft without rewriting its
   content in this ticket.
-- [ ] Draft posts produce no post page, Writing index item, tag page, or tag
+- [x] Draft posts produce no post page, Writing index item, tag page, or tag
   index signal in the production build.
-- [ ] Writing navigation is derived from the presence of at least one
+- [x] Writing navigation is derived from the presence of at least one
   non-draft post and is absent when the collection has none.
-- [ ] Direct navigation to the Writing index remains a coherent empty state or
+- [x] Direct navigation to the Writing index remains a coherent empty state or
   deliberate not-found response without exposing draft content.
-- [ ] Production-browser tests prove that unfinished titles and routes are not
+- [x] Production-browser tests prove that unfinished titles and routes are not
   public and Writing is absent from navigation.
-

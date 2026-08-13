@@ -3,6 +3,7 @@ title: "Variable resolution across scope boundaries"
 date: 2026-06-10
 description: "The resolver pass confused me more than any other chapter. Here is what finally made it click."
 tags: [compilers, crafting_interpreters, c_language]
+draft: true
 ---
 
 The resolver in Crafting Interpreters is a second pass over the AST — after parsing, before interpretation. Its job is purely semantic: walk the tree, figure out exactly which variable declaration each variable reference resolves to, and record the answer as a depth count. No evaluation, no side effects.
