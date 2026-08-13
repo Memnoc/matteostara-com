@@ -9,21 +9,20 @@ formal AI research role.
 
 **Blocked by:** 01 — Establish the production-browser verification seam
 
-**Status:** ready
+**Status:** done
 
-- [ ] The displayed role is “Sr. Software Engineer” everywhere it appears.
-- [ ] The positioning says that Matteo uses AI to help build connectors between
+- [x] The displayed role is “Sr. Software Engineer” everywhere it appears.
+- [x] The positioning says that Matteo uses AI to help build connectors between
   software systems.
-- [ ] Systems programming in C and Rust, distributed systems, compilers, and
+- [x] Systems programming in C and Rust, distributed systems, compilers, and
   low-level tools remain the portfolio's primary personal technical direction.
-- [ ] Applied AI is described as active study and future writing, never as an
+- [x] Applied AI is described as active study and future writing, never as an
   official research role or job title.
-- [ ] No employer or customer identity or confidential connector detail is
+- [x] No employer or customer identity or confidential connector detail is
   introduced.
-- [ ] `labotteghina.gallery` is the sole art destination; stale art domains and
+- [x] `labotteghina.gallery` is the sole art destination; stale art domains and
   duplicate ArtStation presentation are removed.
-- [ ] Home and About retain the agreed human narrative rather than becoming a
+- [x] Home and About retain the agreed human narrative rather than becoming a
   résumé timeline.
-- [ ] Production-browser tests assert the canonical role, specialty, direction,
+- [x] Production-browser tests assert the canonical role, specialty, direction,
   study framing, and art destination on the rendered pages.
-

@@ -62,7 +62,7 @@ test('shared metadata identifies the actual page at its canonical URL', async ({
 
   const title = 'About — Matteo Stara (memnoc)';
   const description =
-    'Matteo Stara (memnoc) — systems software engineer, compiler enthusiast, XDA-recognized developer.';
+    'Matteo Stara (memnoc) — Sr. Software Engineer using AI to help build connectors between software systems.';
   const canonicalUrl = 'https://memnoc.dev/about/';
 
   await expect(page).toHaveTitle(title);
