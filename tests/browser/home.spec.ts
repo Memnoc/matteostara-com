@@ -153,3 +153,37 @@ test('manual theme choice persists across navigation and reloads', async ({ page
     'true',
   );
 });
+
+test('manual Dawn choice overrides a dark operating-system preference', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto('/');
+
+  await page.getByRole('button', { name: 'Theme: Moon' }).click();
+
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dawn');
+  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(250, 244, 237)');
+  await expect(page.locator('html')).toHaveCSS('color', 'rgb(87, 82, 121)');
+
+  await page.addInitScript(() => {
+    requestAnimationFrame(() => {
+      const root = document.documentElement;
+      (window as Window & {
+        firstFrameDawn?: { theme: string | null; background: string };
+      }).firstFrameDawn = {
+        theme: root.getAttribute('data-theme'),
+        background: getComputedStyle(root).backgroundColor,
+      };
+    });
+  });
+  await page.reload();
+  await expect.poll(() => page.evaluate(() => (
+    window as Window & {
+      firstFrameDawn?: { theme: string | null; background: string };
+    }
+  ).firstFrameDawn)).toEqual({
+    theme: 'dawn',
+    background: 'rgb(250, 244, 237)',
+  });
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dawn');
+  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(250, 244, 237)');
+});
