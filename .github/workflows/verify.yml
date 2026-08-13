@@ -27,7 +27,10 @@ jobs:
       - name: Install frozen dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Test public Built evidence
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Verify live public Built evidence
         run: pnpm test:evidence
 
       - name: Build production site
@@ -36,7 +39,7 @@ jobs:
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run production browser smoke test
+      - name: Run full production browser and accessibility suite
         run: pnpm test:browser
 
       - name: Upload browser report

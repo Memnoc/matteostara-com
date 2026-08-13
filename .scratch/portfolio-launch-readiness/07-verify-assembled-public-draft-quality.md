@@ -11,22 +11,22 @@ cannot make.
 unfinished Writing; 04 — Publish the accurate professional identity; 05 — Make
 portfolio status evidence-bearing; 06 — Ship the honest standalone AST demo
 
-**Status:** ready
+**Status:** done
 
-- [ ] Automated accessibility smoke checks pass on Home, About, the empty or
+- [x] Automated accessibility smoke checks pass on Home, About, the empty or
   hidden Writing state, both themes, a valid AST tree, and an AST error state.
-- [ ] Every interactive control and link has a visible focus indicator that is
+- [x] Every interactive control and link has a visible focus indicator that is
   not removed by component-specific styles.
-- [ ] Tabs or selectors expose current state programmatically, errors are
+- [x] Tabs or selectors expose current state programmatically, errors are
   announced without stealing focus, and decorative imagery is hidden from
   assistive technology.
-- [ ] Production-browser tests at representative phone and desktop viewports
+- [x] Production-browser tests at representative phone and desktop viewports
   prove there is no page-level horizontal overflow and all primary actions
   remain reachable.
-- [ ] A checked-in pre-Launch checklist records manual keyboard traversal,
+- [x] A checked-in pre-Launch checklist records manual keyboard traversal,
   focus order, zoom/readability, narrow-screen interaction, theme behavior,
   public Built-evidence verification, and the decision to remove `noindex`.
-- [ ] The checklist distinguishes a deployed Public draft from Launch and
+- [x] The checklist distinguishes a deployed Public draft from Launch and
   requires every canonical `PLAN.md` launch-gate item to pass before promotion.
-- [ ] The complete frozen install, build, browser suite, accessibility checks,
+- [x] The complete frozen install, build, browser suite, accessibility checks,
   and public Built-evidence checks pass together in CI.

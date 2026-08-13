@@ -11,8 +11,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "typecheck": "tsc --noEmit",
     "test:evidence": "node --test tests/evidence/built-evidence.test.mjs",
     "test:browser": "playwright test",
+    "test:accessibility": "playwright test accessibility.spec.ts assembled-quality.spec.ts",
     "verify:evidence": "node scripts/verify-built-evidence.mjs",
     "astro": "astro"
   },
@@ -26,6 +28,7 @@
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.62.0",
     "@types/node": "^24.13.3"
   }

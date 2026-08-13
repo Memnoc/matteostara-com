@@ -19,6 +19,7 @@ const {
 
 const gitHash = __GIT_HASH__;
 const hasPublishedWriting = (await getPublishedWriting()).length > 0;
+const normalizedCurrentPath = currentPath === '/' ? '/' : currentPath.replace(/\/$/, '');
 const canonicalPath = currentPath === '/' ? '/' : `${currentPath.replace(/\/$/, '')}/`;
 const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).href;
 ---
@@ -68,10 +69,10 @@ const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).href;
         >build: {gitHash}</a>
       </div>
       <div class="nav-links">
-        <a href="/" class:list={[{ active: currentPath === '/' }]}>home</a>
-        <a href="/about" class:list={[{ active: currentPath === '/about' }]}>about</a>
+        <a href="/" class:list={[{ active: normalizedCurrentPath === '/' }]} aria-current={normalizedCurrentPath === '/' ? 'page' : undefined}>home</a>
+        <a href="/about" class:list={[{ active: normalizedCurrentPath === '/about' }]} aria-current={normalizedCurrentPath === '/about' ? 'page' : undefined}>about</a>
         {hasPublishedWriting && (
-          <a href="/writing" class:list={[{ active: currentPath.startsWith('/writing') }]}>writing</a>
+          <a href="/writing" class:list={[{ active: normalizedCurrentPath.startsWith('/writing') }]} aria-current={normalizedCurrentPath.startsWith('/writing') ? 'page' : undefined}>writing</a>
         )}
       </div>
       <button id="theme-toggle" aria-label="Theme" aria-pressed="false">

@@ -1,10 +1,12 @@
 # memnoc.dev
 
-Personal site and technical writing. Built with Astro 6 as a fully static site — no runtime, no server, no JS framework overhead on the critical path.
+Personal site and technical writing. Built with Astro 6 as a fully static site — no runtime server and no JS framework overhead on the critical path.
 
 ## Architecture
 
-Astro's island architecture: pages render to static HTML at build time. Interactive components (the terminal shell demo on the home page) hydrate client-side as isolated React 19 islands via `client:only`. Everything else ships zero JS.
+Astro's island architecture: pages render to static HTML at build time. The
+standalone Lox expression parser on the home page hydrates client-side as an
+isolated React 19 island. Everything else ships zero framework JavaScript.
 
 Content is managed through Astro's typed content layer — blog posts are Markdown files with Zod-validated frontmatter, compiled to static routes at build time. No CMS, no database.
 
@@ -26,10 +28,12 @@ another package-manager launcher can use that exact version.
 
 ```sh
 pnpm install --frozen-lockfile        # install without changing pnpm-lock.yaml
+pnpm typecheck                        # typecheck TypeScript
 pnpm verify:evidence                  # verify Built candidates on public GitHub
 pnpm build                            # production output → dist/
 pnpm exec playwright install chromium # one-time local browser install
-pnpm test:browser                     # serve dist/, smoke test, then stop the server
+pnpm test:browser                     # production browser + accessibility suite
+pnpm test:accessibility               # focused accessibility/assembled-quality checks
 ```
 
 `pnpm verify:evidence` queries the unauthenticated public default branches of
@@ -42,6 +46,10 @@ Northstar's validation and installer suites run from a revision-pinned archive.
 also exercises those failure messages against live GitHub responses; CI runs
 that suite before building the portfolio.
 
+Before promoting the Public draft as the launched portfolio, complete
+[`docs/pre-launch-checklist.md`](docs/pre-launch-checklist.md). Deployment does
+not remove `noindex` or satisfy the launch gate by itself.
+
 The browser suite always runs against Astro's production preview server. Run
 `pnpm build` first so `dist/` reflects the source under test. For day-to-day
 development, `pnpm dev` starts the HMR server at `localhost:4321`.
@@ -50,7 +58,7 @@ development, `pnpm dev` starts the HMR server at `localhost:4321`.
 
 ```
 src/
-  components/       # React islands (terminal shell demo)
+  components/       # React island (standalone Lox expression parser)
   content/blog/     # Markdown posts — typed via Zod schema
   content.config.ts # Content collection schema
   layouts/Base.astro

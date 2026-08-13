@@ -321,12 +321,15 @@ export default function AstViewer() {
         spellCheck={false}
         autoComplete="off"
         autoCorrect="off"
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? 'lox-expression-error' : undefined}
       />
       <div className="example-chips">
         {EXAMPLES.map(ex => (
           <button
             key={ex}
             className={`example-chip${input === ex ? ' active' : ''}`}
+            aria-pressed={input === ex}
             onClick={() => handleExample(ex)}
             type="button"
           >
@@ -334,7 +337,7 @@ export default function AstViewer() {
           </button>
         ))}
       </div>
-      {error && <p className="ast-error" role="alert">{error}</p>}
+      {error && <p id="lox-expression-error" className="ast-error" role="alert">{error}</p>}
       {!error && layouts.length > 0 && (
         <div className="ast-svg-wrap" role="group" aria-label="Scrollable parse tree">
           <svg
