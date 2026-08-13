@@ -11,7 +11,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test:evidence": "node --test tests/evidence/built-evidence.test.mjs",
     "test:browser": "playwright test",
+    "verify:evidence": "node scripts/verify-built-evidence.mjs",
     "astro": "astro"
   },
   "dependencies": {

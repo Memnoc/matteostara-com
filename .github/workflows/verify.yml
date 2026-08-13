@@ -27,6 +27,9 @@ jobs:
       - name: Install frozen dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test public Built evidence
+        run: pnpm test:evidence
+
       - name: Build production site
         run: pnpm build
 

@@ -9,26 +9,25 @@ training projects are not offered as proof.
 
 **Blocked by:** 01 — Establish the production-browser verification seam
 
-**Status:** ready
+**Status:** done
 
-- [ ] CodeAtlas is presented as an Original Built entry with accurate public
+- [x] CodeAtlas is presented as an Original Built entry with accurate public
   repository URL, concise capability claim, and relevant language/domain tags.
-- [ ] Northstar is presented as an Adapted and extended Built entry with
+- [x] Northstar is presented as an Adapted and extended Built entry with
   accurate public repository URL, concise capability claim, and relevant
   language/domain tags.
-- [ ] Built and Current work are structurally and textually distinct; status is
+- [x] Built and Current work are structurally and textually distinct; status is
   understandable without relying on color alone.
-- [ ] StarScript is the featured Current work and is described at its public
+- [x] StarScript is the featured Current work and is described at its public
   bytecode-VM stage without parser, grammar, custom-error-recovery, or shared
   AST implementation claims.
-- [ ] `r_command_line`, BYOL, and the unavailable Rust shell do not appear in
+- [x] `r_command_line`, BYOL, and the unavailable Rust shell do not appear in
   the current portfolio list.
-- [ ] A non-browser verification command checks the unauthenticated public
+- [x] A non-browser verification command checks the unauthenticated public
   default branch of both Built candidates and confirms their agreed evidence:
   working-source repository, runnable instructions or example, license, known
   limitations, and an explicit provenance/original-work account.
-- [ ] The external evidence check fails clearly when a repository, default
+- [x] The external evidence check fails clearly when a repository, default
   branch, or required evidence document is unavailable and runs in CI.
-- [ ] Production-browser tests assert the rendered classification, claims,
+- [x] Production-browser tests assert the rendered classification, claims,
   working links, and absence of excluded projects.
-

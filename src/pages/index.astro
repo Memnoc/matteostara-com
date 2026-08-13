@@ -1,44 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import AstViewer from '../components/AstViewer.tsx';
+import { builtEntries, currentWork, repositoryUrl, type BuiltStatus } from '../portfolio';
 
-const projects = [
-  {
-    name: 'r_command_line',
-    blurb: 'CLI tool that generates commit messages. Finished; needs a revisit.',
-    langs: ['Rust'],
-    status: 'Original',
-    url: 'https://github.com/Memnoc/r_command_line',
-  },
-  {
-    name: 'StarScript',
-    blurb: 'Early bytecode VM in C with a hand-built instruction chunk, following Crafting Interpreters as a learning path.',
-    langs: ['C'],
-    status: 'Personalized from project',
-    url: 'https://github.com/Memnoc/StarScript',
-  },
-  {
-    name: 'BYOL',
-    blurb: 'Build Your Own Lisp — personalizing the tutorial, adding extensions as I understand each concept.',
-    langs: ['C'],
-    status: 'WIP',
-    url: 'https://github.com/Memnoc/BYOL',
-  },
-  {
-    name: 'shell',
-    blurb: 'POSIX shell in Rust. Codecrafters challenge, extended beyond the spec — builtins, PATH resolution, REPL loop.',
-    langs: ['Rust'],
-    status: 'WIP',
-    url: 'https://github.com/Memnoc/codecrafters-shell-rust',
-  },
-] as const;
-
-type StatusKey = typeof projects[number]['status'];
-
-const statusClass: Record<StatusKey, string> = {
-  'Original':            'status-original',
-  'Personalized from project': 'status-personalized-from-project',
-  'WIP':                 'status-wip',
+const builtStatusClass: Record<BuiltStatus, string> = {
+  'Original': 'status-original',
+  'Adapted and extended': 'status-adapted',
 };
 ---
 
@@ -85,34 +52,49 @@ const statusClass: Record<StatusKey, string> = {
     <AstViewer client:only="react" />
   </section>
 
-  <section class="built">
-    <h2>Built</h2>
+  <section class="built" aria-labelledby="built-heading">
+    <h2 id="built-heading">Built</h2>
+    <p class="portfolio-intro">
+      Completed work whose public default branch carries source, a clean build, runnable proof,
+      licensing, limitations, and provenance.
+    </p>
     <div class="project-list">
-      {projects.map(p => (
-        <div class="project-card">
+      {builtEntries.map(entry => (
+        <article class="project-card" aria-label={`${entry.name} — ${entry.status}`}>
           <div class="project-header">
-            <a href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a>
-            <span class={`status ${statusClass[p.status]}`}>{p.status.toLowerCase()}</span>
+            <a
+              href={repositoryUrl(entry.repository)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${entry.name} source`}
+            >{entry.name}</a>
+            <span class={`status ${builtStatusClass[entry.status]}`}>{entry.status}</span>
           </div>
-          <p class="blurb">{p.blurb}</p>
+          <p class="blurb">{entry.blurb}</p>
           <div class="lang-tags">
-            {p.langs.map(l => <span class="tag">{l}</span>)}
+            {entry.tags.map(tag => <span class="tag">{tag}</span>)}
           </div>
-        </div>
+        </article>
       ))}
     </div>
   </section>
 
-  <section class="studying">
-    <h2>Currently</h2>
-    <p class="studying-text">
-      <em>Crafting Interpreters</em> — working through closures and the resolver pass.
-      Variable resolution across scope boundaries took longer than expected;
-      the way the resolver and interpreter share state is subtle.
+  <section class="current-work" aria-labelledby="current-work-heading">
+    <h2 id="current-work-heading">Current work</h2>
+    <p class="portfolio-intro">
+      Work in progress, shown at its last publicly verified maturity and current availability.
     </p>
-    <p class="studying-text">
-      Also rereading <em>Build Your Own Lisp</em> with fresh eyes after the StarScript work.
-    </p>
+    <article class="project-card featured-current-work" aria-label={`${currentWork.name} — ${currentWork.status}`}>
+      <div class="project-header">
+        <span class="project-name">{currentWork.name}</span>
+        <span class="status status-current">{currentWork.status}</span>
+      </div>
+      <p class="blurb">{currentWork.blurb}</p>
+      <p class="availability">{currentWork.availability}</p>
+      <div class="lang-tags">
+        {currentWork.tags.map(tag => <span class="tag">{tag}</span>)}
+      </div>
+    </article>
   </section>
 
 </Base>

@@ -501,7 +501,15 @@ section {
   stroke-width: 1.5;
 }
 
-/* ——— Built / Studying sections ——— */
+/* ——— Built / Current work sections ——— */
+.portfolio-intro {
+  max-width: 62ch;
+  margin-top: -0.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--rp-subtle);
+  font-size: 0.9rem;
+}
+
 .project-list {
   display: flex;
   flex-direction: column;
@@ -525,7 +533,8 @@ section {
   margin-bottom: 0.3rem;
 }
 
-.project-header a {
+.project-header a,
+.project-name {
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--rp-text);
@@ -540,6 +549,14 @@ section {
   font-size: 0.9rem;
   color: var(--rp-subtle);
   margin-bottom: 0.5rem;
+}
+
+.availability {
+  margin-top: -0.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--rp-muted);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
 }
 
 .lang-tags {
@@ -562,7 +579,6 @@ section {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   padding: 0.1rem 0.5rem;
   border-radius: 3px;
-  text-transform: lowercase;
 }
 
 .status-original {
@@ -570,24 +586,20 @@ section {
   color: var(--rp-foam);
 }
 
-.status-personalized-from-project {
+.status-adapted {
   background: color-mix(in srgb, var(--rp-iris) 12%, transparent);
   color: var(--rp-iris);
 }
 
-.status-wip {
+.status-current {
   background: color-mix(in srgb, var(--rp-gold) 12%, transparent);
   color: var(--rp-gold);
 }
 
-.studying-text {
-  font-size: 0.95rem;
-  color: var(--rp-text);
-}
-
-.studying-text em {
-  color: var(--rp-subtle);
-  font-style: normal;
+.featured-current-work {
+  border-left: 2px solid var(--rp-gold);
+  border-bottom: none;
+  padding: 0.25rem 0 0.25rem 1rem;
 }
 
 /* ——— Writing list ——— */

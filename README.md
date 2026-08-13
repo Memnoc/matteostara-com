@@ -26,10 +26,21 @@ another package-manager launcher can use that exact version.
 
 ```sh
 pnpm install --frozen-lockfile        # install without changing pnpm-lock.yaml
+pnpm verify:evidence                  # verify Built candidates on public GitHub
 pnpm build                            # production output → dist/
 pnpm exec playwright install chromium # one-time local browser install
 pnpm test:browser                     # serve dist/, smoke test, then stop the server
 ```
+
+`pnpm verify:evidence` queries the unauthenticated public default branches of
+CodeAtlas and Northstar. It fails if either repository or default branch is
+unavailable, or if working source, a clean verification run, runnable
+instructions, licensing, known limitations, or the agreed provenance account
+is missing. CodeAtlas's public CI must pass at the verified revision;
+Northstar's validation and installer suites run from a revision-pinned archive.
+`pnpm test:evidence`
+also exercises those failure messages against live GitHub responses; CI runs
+that suite before building the portfolio.
 
 The browser suite always runs against Astro's production preview server. Run
 `pnpm build` first so `dist/` reflects the source under test. For day-to-day
