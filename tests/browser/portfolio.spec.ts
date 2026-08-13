@@ -44,7 +44,7 @@ test('hiring manager sees evidence-bearing Built entries with distinct provenanc
   }
 });
 
-test('visitor sees StarScript separately as honest Current work', async ({ page }) => {
+test('visitor sees StarScript separately as honest Current work', async ({ page, request }) => {
   await page.goto('/');
 
   const currentWork = page.getByRole('region', { name: 'Current work' });
@@ -59,8 +59,15 @@ test('visitor sees StarScript separately as honest Current work', async ({ page 
   await expect(starScript.getByText(
     'At its last publicly verified stage, an early bytecode VM in C building a hand-built instruction chunk, following Crafting Interpreters as a learning path.',
   )).toBeVisible();
-  await expect(starScript.getByText('Source currently unavailable', { exact: true })).toBeVisible();
-  await expect(starScript.getByRole('link')).toHaveCount(0);
+  const sourceLink = starScript.getByRole('link', { name: 'View StarScript source' });
+  await expect(sourceLink).toHaveAttribute(
+    'href',
+    'https://github.com/Memnoc/StarScript',
+  );
+  await expect(starScript).not.toContainText('Source currently unavailable');
+
+  const response = await request.get(await sourceLink.getAttribute('href') as string);
+  expect(response.ok()).toBe(true);
 
   await expect(starScript).not.toContainText(/parser|grammar|error recovery|shared AST/i);
   await expect(page.locator('main')).not.toContainText(

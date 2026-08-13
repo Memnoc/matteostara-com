@@ -8,18 +8,18 @@ public source instead of the stale “Source currently unavailable” statement.
 
 **Blocked by:** 05 — Make portfolio status evidence-bearing
 
-**Status:** ready
+**Status:** done
 
-- [ ] StarScript remains the featured Current work entry and is not promoted
+- [x] StarScript remains the featured Current work entry and is not promoted
   to Built.
-- [ ] The entry links to `https://github.com/Memnoc/StarScript` with a clear
+- [x] The entry links to `https://github.com/Memnoc/StarScript` with a clear
   accessible source-link name.
-- [ ] The stale “Source currently unavailable” statement is removed wherever
+- [x] The stale “Source currently unavailable” statement is removed wherever
   it appears.
-- [ ] The maturity copy remains limited to the public `main` evidence: an early
+- [x] The maturity copy remains limited to the public `main` evidence: an early
   bytecode VM in C that executes a hand-built instruction chunk.
-- [ ] The source link returns a successful public response.
-- [ ] Production-browser coverage asserts the Current work classification,
+- [x] The source link returns a successful public response.
+- [x] Production-browser coverage asserts the Current work classification,
   working source link, accurate maturity claim, and absence of stale
   availability copy.
 

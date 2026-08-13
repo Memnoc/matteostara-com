@@ -90,7 +90,14 @@ const builtStatusClass: Record<BuiltStatus, string> = {
         <span class="status status-current">{currentWork.status}</span>
       </div>
       <p class="blurb">{currentWork.blurb}</p>
-      <p class="availability">{currentWork.availability}</p>
+      <p class="availability">
+        <a
+          href={repositoryUrl(currentWork.repository)}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View ${currentWork.name} source`}
+        >View source</a>
+      </p>
       <div class="lang-tags">
         {currentWork.tags.map(tag => <span class="tag">{tag}</span>)}
       </div>

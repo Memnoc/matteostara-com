@@ -91,7 +91,7 @@ export const currentWork = {
   blurb: 'At its last publicly verified stage, an early bytecode VM in C building a hand-built instruction chunk, following Crafting Interpreters as a learning path.',
   tags: ['C', 'Bytecode VM'],
   status: 'Current work',
-  availability: 'Source currently unavailable',
+  repository: 'Memnoc/StarScript',
 } as const;
 
 export type BuiltStatus = typeof builtEntries[number]['status'];
