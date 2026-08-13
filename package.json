@@ -11,7 +11,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "astro sync && tsc --noEmit",
     "test:evidence": "node --test tests/evidence/built-evidence.test.mjs",
     "test:browser": "playwright test",
     "test:accessibility": "playwright test accessibility.spec.ts assembled-quality.spec.ts",
