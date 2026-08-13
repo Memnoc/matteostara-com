@@ -9,17 +9,16 @@ later visitor-facing slice extends.
 
 **Blocked by:** None — can start immediately
 
-**Status:** ready
+**Status:** done
 
-- [ ] The repository pins the package-manager version and exposes documented
+- [x] The repository pins the package-manager version and exposes documented
   commands for a frozen dependency install, production build, and browser test.
-- [ ] CI performs the frozen install and production build without editing the
+- [x] CI performs the frozen install and production build without editing the
   lockfile or requiring an interactive dependency-policy decision.
-- [ ] A production server is started and stopped automatically around browser
+- [x] A production server is started and stopped automatically around browser
   tests; the suite does not test against the development server.
-- [ ] A headless browser opens the built home page and asserts a visitor-visible
+- [x] A headless browser opens the built home page and asserts a visitor-visible
   smoke behavior.
-- [ ] Browser-test artifacts and generated output are ignored rather than
+- [x] Browser-test artifacts and generated output are ignored rather than
   committed.
-- [ ] The production build and browser smoke test pass locally.
-
+- [x] The production build and browser smoke test pass locally.

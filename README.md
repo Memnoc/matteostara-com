@@ -19,15 +19,21 @@ Content is managed through Astro's typed content layer — blog posts are Markdo
 | Hosting | Cloudflare Pages | Edge CDN, git-push deploy, no bandwidth billing |
 | Domain | Cloudflare Registrar | Single control plane for DNS + TLS + deploy |
 
-## Dev
+## Local verification
 
-Requires Node ≥ 22.12 and pnpm.
+Requires Node ≥ 22.12. The repository pins pnpm in `package.json`; Corepack or
+another package-manager launcher can use that exact version.
 
 ```sh
-pnpm dev      # localhost:4321, HMR
-pnpm build    # static output → dist/
-pnpm preview  # serve dist/ locally
+pnpm install --frozen-lockfile        # install without changing pnpm-lock.yaml
+pnpm build                            # production output → dist/
+pnpm exec playwright install chromium # one-time local browser install
+pnpm test:browser                     # serve dist/, smoke test, then stop the server
 ```
+
+The browser suite always runs against Astro's production preview server. Run
+`pnpm build` first so `dist/` reflects the source under test. For day-to-day
+development, `pnpm dev` starts the HMR server at `localhost:4321`.
 
 ## Structure
 

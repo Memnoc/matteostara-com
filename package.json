@@ -2,13 +2,16 @@
   "name": "memnoc-dev",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@11.17.0",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.12.0",
+    "pnpm": "11.17.0"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "test:browser": "playwright test",
     "astro": "astro"
   },
   "dependencies": {
@@ -19,5 +22,9 @@
     "astro": "^6.4.6",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0",
+    "@types/node": "^24.13.3"
   }
 }
