@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import DemoCarousel from '../components/DemoCarousel.tsx';
+import AstViewer from '../components/AstViewer.tsx';
 
 const projects = [
   {
@@ -12,7 +12,7 @@ const projects = [
   },
   {
     name: 'StarScript',
-    blurb: 'Lox-flavored interpreter in C. Following Crafting Interpreters but extended — named grammar rules, custom error handling, going past the book.',
+    blurb: 'Early bytecode VM in C with a hand-built instruction chunk, following Crafting Interpreters as a learning path.',
     langs: ['C'],
     status: 'Personalized from project',
     url: 'https://github.com/Memnoc/StarScript',
@@ -78,8 +78,11 @@ const statusClass: Record<StatusKey, string> = {
     <p class="current">Currently: an interpreter and notes from Crafting Interpreters.</p>
   </section>
 
-  <section class="demo-section">
-    <DemoCarousel client:only="react" />
+  <section class="demo-section" aria-label="Lox expression parser">
+    <p class="section-caption">
+      Standalone browser-side Lox expression parser inspired by the StarScript learning path.
+    </p>
+    <AstViewer client:only="react" />
   </section>
 
   <section class="built">

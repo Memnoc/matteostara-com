@@ -29,6 +29,21 @@ function nodeChildren(node: AstNode): AstNode[] {
   }
 }
 
+function describeTree(node: AstNode): string {
+  switch (node.kind) {
+    case 'binary':
+      return `(${node.op} ${describeTree(node.left)} ${describeTree(node.right)})`;
+    case 'unary':
+      return `(${node.op} ${describeTree(node.right)})`;
+    case 'grouping':
+      return `(group ${describeTree(node.expr)})`;
+    case 'literal':
+      return node.value;
+    case 'variable':
+      return node.name;
+  }
+}
+
 // ——— Tokenizer ———
 
 type TT =
@@ -53,12 +68,19 @@ function tokenize(src: string): Token[] {
     if (/\d/.test(c)) {
       let v = '';
       while (i < src.length && /[\d.]/.test(src[i])) v += src[i++];
+      if (!/^\d+(?:\.\d+)?$/.test(v)) {
+        throw new Error(`Malformed number “${v}”.`);
+      }
       out.push({ type: 'NUMBER', lexeme: v });
       continue;
     }
     if (c === '"') {
       let v = '"'; i++;
-      while (i < src.length && src[i] !== '"') v += src[i++];
+      while (i < src.length && src[i] !== '"') {
+        if (src[i] === '\\') throw new Error('String escapes are not supported.');
+        v += src[i++];
+      }
+      if (i >= src.length) throw new Error('Unterminated string.');
       v += '"'; i++;
       out.push({ type: 'STRING', lexeme: v });
       continue;
@@ -90,7 +112,10 @@ function tokenize(src: string): Token[] {
         break;
       case '=':
         if (src[i + 1] === '=') { out.push({ type: 'EQ_EQ', lexeme: '==' }); i++; }
+        else throw new Error('Unsupported character “=”.');
         break;
+      default:
+        throw new Error(`Unsupported character “${c}”.`);
     }
     i++;
   }
@@ -117,7 +142,7 @@ class Parser {
   parse(): AstNode {
     const expr = this.expression();
     if (!this.check('EOF'))
-      throw new Error(`unexpected: "${this.peek().lexeme}"`);
+      throw new Error(`Unexpected token “${this.peek().lexeme}”.`);
     return expr;
   }
 
@@ -170,12 +195,12 @@ class Parser {
     if (this.match('IDENT'))           return { kind: 'variable', name: this.prev().lexeme };
     if (this.match('LPAREN')) {
       const expr = this.expression();
-      if (!this.check('RPAREN')) throw new Error('expected ")"');
+      if (!this.check('RPAREN')) throw new Error('Expected “)” after expression.');
       this.advance();
       return { kind: 'grouping', expr };
     }
     const tok = this.peek();
-    throw new Error(tok.type === 'EOF' ? 'unexpected end of input' : `unexpected: "${tok.lexeme}"`);
+    throw new Error(tok.type === 'EOF' ? 'Expected an expression.' : `Unexpected token “${tok.lexeme}”.`);
   }
 }
 
@@ -221,17 +246,17 @@ function maxDepth(node: AstNode): number {
 // ——— Parse helper ———
 
 type ParseResult =
-  | { ok: true; layouts: NodeLayout[] }
+  | { ok: true; layouts: NodeLayout[]; description: string }
   | { ok: false; error: string };
 
 function parseInput(src: string): ParseResult {
   const trimmed = src.trim();
-  if (!trimmed) return { ok: true, layouts: [] };
+  if (!trimmed) return { ok: true, layouts: [], description: '' };
   try {
     const ast = new Parser(tokenize(trimmed)).parse();
     const layouts: NodeLayout[] = [];
     collectLayouts(ast, 0, 0, layouts);
-    return { ok: true, layouts };
+    return { ok: true, layouts, description: describeTree(ast) };
   } catch (e) {
     return { ok: false, error: (e as Error).message };
   }
@@ -286,7 +311,9 @@ export default function AstViewer() {
 
   return (
     <div className="ast-viewer">
+      <label htmlFor="lox-expression">Lox expression</label>
       <input
+        id="lox-expression"
         type="text"
         value={input}
         onChange={handleChange}
@@ -307,14 +334,15 @@ export default function AstViewer() {
           </button>
         ))}
       </div>
-      {error && <p className="ast-error">{error}</p>}
+      {error && <p className="ast-error" role="alert">{error}</p>}
       {!error && layouts.length > 0 && (
-        <div className="ast-svg-wrap">
+        <div className="ast-svg-wrap" role="group" aria-label="Scrollable parse tree">
           <svg
             width={totalWidth}
             height={totalHeight}
             viewBox={`0 0 ${totalWidth} ${totalHeight}`}
-            aria-label="Abstract syntax tree"
+            role="img"
+            aria-label={`Parse tree for “${input.trim()}”: ${result.ok ? result.description : ''}`}
           >
             {edges.map((e, i) => (
               <line

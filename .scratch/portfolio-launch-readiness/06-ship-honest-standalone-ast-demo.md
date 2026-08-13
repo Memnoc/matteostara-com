@@ -9,24 +9,23 @@ inspired by the StarScript learning path, not as StarScript running in-browser.
 
 **Blocked by:** 01 — Establish the production-browser verification seam
 
-**Status:** ready
+**Status:** done
 
-- [ ] The shell carousel, simulated terminal, shell framing, and shell client
+- [x] The shell carousel, simulated terminal, shell framing, and shell client
   code are no longer shipped.
-- [ ] The demo caption clearly identifies a standalone browser-side Lox
+- [x] The demo caption clearly identifies a standalone browser-side Lox
   expression parser inspired by StarScript and makes no integration claim.
-- [ ] Literals, identifiers, grouping, unary operators, multiplication and
+- [x] Literals, identifiers, grouping, unary operators, multiplication and
   division, addition and subtraction, comparisons, and equality render trees
   with correct precedence and associativity.
-- [ ] Unsupported characters, malformed numeric literals, unterminated quoted
+- [x] Unsupported characters, malformed numeric literals, unterminated quoted
   strings, trailing tokens, missing operands, and unclosed groups each produce
   a concise error instead of a partial or silently altered tree.
-- [ ] String escape syntax is not accidentally accepted or advertised.
-- [ ] The input has a persistent visible label, parser errors are announced,
+- [x] String escape syntax is not accidentally accepted or advertised.
+- [x] The input has a persistent visible label, parser errors are announced,
   examples are keyboard-operable, and the rendered SVG has a meaningful
   accessible name.
-- [ ] The tree remains horizontally contained within the demo on narrow
+- [x] The tree remains horizontally contained within the demo on narrow
   viewports rather than causing page-level overflow.
-- [ ] Production-browser tests cover representative precedence/grouping cases
+- [x] Production-browser tests cover representative precedence/grouping cases
   and every agreed invalid-input class through visitor-visible output.
-
