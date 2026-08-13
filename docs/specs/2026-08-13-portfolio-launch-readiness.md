@@ -264,3 +264,78 @@ than editorial promises.
   a variable-to-depth map but illustrates it with clox bytecode compiler code.
   Draft status prevents that mismatch from being presented as reviewed
   technical writing.
+
+## Verification
+
+**Hardened:** 2026-08-13
+
+**Candidate revision:** `4a9bcfae788638b8a4d0ad32f313025a8120ffe8`
+
+**Environment:** local production build served by `astro preview`, Chromium
+headless browser, and unauthenticated public GitHub surfaces.
+
+The frozen install left `pnpm-lock.yaml` unchanged. Typechecking passed, the
+production build generated only `/`, `/about/`, and `/writing/`, all 31
+production-browser/accessibility checks passed, and all 5 live Built-evidence
+checks passed. The evidence check observed CodeAtlas `main@7c1262cc` and
+Northstar `main@09af1324`. `labotteghina.gallery` returned HTTP 200;
+StarScript's repository is public at `main@b1d57b2`; immutable source confirms
+an early bytecode VM executing a hand-built instruction chunk.
+
+| # | User story (verbatim) | Verdict | Observed evidence |
+|---|---|---|---|
+| 1 | As a hiring manager, I want every Built entry to link to public evidence for its claims, so that I can evaluate demonstrated work without taking the site on trust. | pass | Both rendered Built links returned successful public responses; the live evidence command passed every required category at the recorded revisions. |
+| 2 | As a hiring manager, I want Original work distinguished from Adapted and extended work, so that I understand Matteo's contribution and the relevant source material. | pass | The production page exposed explicit `Original` and `Adapted and extended` labels, and Northstar's copy distinguished Matt Pocock's source system from Matteo's additions. |
+| 3 | As a visitor, I want CodeAtlas presented as the Original Built entry only after its public evidence passes, so that the classification has a concrete meaning. | pass | CodeAtlas rendered as Original after live verification passed source, clean build, runnable instructions, MIT license, limitations, and original-work account at `7c1262cc`. |
+| 4 | As a visitor, I want Northstar presented as Adapted and extended only after its public evidence passes, so that its origin and Matteo's additions are both clear. | pass | Northstar rendered as Adapted and extended after its exact public archive passed source, validation/install tests, runnable instructions, MIT license, limitations, and adaptation account at `09af1324`. |
+| 5 | As a visitor, I want unfinished projects grouped under Current work with their real maturity, so that active learning is visible without being mistaken for completed proof. | fail | Built and Current work are separate and the maturity claim is accurate, but StarScript is now public while the rendered entry still says `Source currently unavailable` and offers no source link. Routed to ticket 08 after a read-only debug session confirmed stale static portfolio data and a regression test that preserves it. |
+| 6 | As a visitor, I want StarScript described as an early bytecode VM, so that its site copy agrees with its public implementation. | pass | Public `main@b1d57b2` contains a bytecode VM dispatching `OP_CONSTANT`, `OP_NEGATE`, and `OP_RETURN`; `main.c` constructs the instruction chunk by hand, matching the rendered maturity claim. |
+| 7 | As a visitor, I do not want dead or private project links presented as portfolio evidence, so that every offered path is useful. | pass | Both offered Built links were live; StarScript's unavailable URL was not linked; excluded training/unavailable projects were absent from Home and About. |
+| 8 | As a visitor, I want the AST demo identified as a standalone browser-side Lox expression parser inspired by StarScript, so that I do not infer a code connection that does not exist. | pass | Home and About rendered the standalone/inspired-by boundary and no integration claim or shell framing. |
+| 9 | As a visitor, I want valid Lox-subset expressions rendered as readable SVG trees, so that the demo provides a concrete interactive explanation of parsing. | pass | Browser checks rendered named SVG trees for literals, identifiers, grouping, unary, multiplicative, additive, comparison, and equality expressions with the expected precedence and associativity. |
+| 10 | As a visitor, I want malformed numbers, unterminated strings, unsupported characters, and incomplete expressions rejected with clear feedback, so that the demo never silently invents a valid program. | pass | The rendered interface rejected every agreed invalid-input class, including trailing tokens and unclosed groups, announced the exact error, and removed any partial tree. |
+| 11 | As a keyboard user, I want to operate navigation, theme selection, demo controls, inputs, and links with a visible focus indicator, so that the site is usable without a pointing device. | pass | Every rendered action on all generated pages accepted focus with a non-zero visible outline; keyboard activation of a parser example produced its tree, and navigation/theme/example state was programmatic. |
+| 12 | As a small-screen visitor, I want navigation, project information, prose, and the AST demo to remain readable and operable, so that the portfolio works on a phone without horizontal page overflow. | pass | At 320 CSS pixels every generated page had no page-level horizontal overflow, named primary actions remained visible/enabled, and wide-tree scrolling stayed inside the parser region. |
+| 13 | As a visitor using a screen reader, I want meaningful page structure, control names and states, error announcements, and non-redundant image alternatives, so that the site communicates the same information without relying on sight. | pass | Axe found no violations on Home, About, empty Writing, both themes, a valid tree, or an error state; headings, names, `aria-current`, `aria-pressed`, invalid state, alerts, and image semantics were observed. |
+| 14 | As a visitor, I want the theme to follow my operating-system preference until I make a persistent manual choice, so that the site is comfortable without flashing the wrong theme. | pass | The first animation frame followed the emulated OS preference; a manual choice persisted through navigation and reload, with accessible current state. |
+| 15 | As a recruiter, I want Matteo's title and professional specialty stated accurately without exposing his employer, so that I understand his current seniority and work. | pass | Home and About rendered `Sr. Software Engineer` and AI-assisted connector development; no employer/customer identity was present. |
+| 16 | As a systems-oriented hiring manager, I want systems programming, distributed systems, compilers, and low-level tools to remain the site's central direction, so that the portfolio's intended specialty is unmistakable. | pass | Home and About both rendered systems software in C/Rust, distributed systems, compilers, and low-level tools. |
+| 17 | As a reader, I want Applied AI study described as study and writing rather than a formal research position, so that the site does not overstate Matteo's role. | pass | Both primary pages framed Applied AI as study and writing and contained no AI-research job-title claim. |
+| 18 | As a reader, I want `labotteghina.gallery` used consistently, so that the humanizing art link reaches the active site. | pass | Home and About used only `labotteghina.gallery`; its live endpoint returned HTTP 200. |
+| 19 | As an author, I want draft posts excluded from indexes, tag pages, routes, and navigation signals, so that unfinished or technically unreviewed writing cannot leak into the public site. | pass | The build generated no post/tag routes; all known draft/test post and tag URLs returned 404 and their titles were absent. |
+| 20 | As an author, I want Writing navigation to appear only when at least one reviewed, non-draft post exists, so that an empty section is not advertised. | pass | With no reviewed post, Writing was absent from navigation while direct `/writing/` showed a coherent empty state. |
+| 21 | As a direct visitor during the Public draft, I want the site to remain usable while carrying `noindex`, so that development access does not imply Launch. | pass | All three production-built pages loaded and remained operable while emitting `noindex, follow`. |
+| 22 | As a search crawler, I want a page-level noindex directive during the Public draft, so that the unfinished portfolio is not added to search results. | pass | Every generated page emitted `noindex, follow`; no `robots.txt` rule blocked those page paths. |
+| 23 | As a person sharing a page after Launch, I want canonical and social metadata to identify the correct URL, title, and description, so that links have accurate previews and do not create duplicate identities. | pass | Production pages emitted absolute `memnoc.dev` canonicals and page-specific title, description, Open Graph, and Twitter metadata even during Public draft. |
+| 24 | As the repository maintainer, I want a pinned, reproducible production build in CI, so that dependency or compilation drift blocks publication. | unverifiable | The exact pinned frozen install, typecheck, and build passed locally and the workflow contains those gates, but this candidate is nine commits ahead of `origin/main`; no CI run exists for the candidate revision. |
+| 25 | As the repository maintainer, I want internal routes, published content, and Built-entry links checked automatically, so that broken public paths block Launch. | pass | The production-browser suite checked all generated/forbidden routes, publication state, and live Built links; the complete suite passed 31/31. |
+| 26 | As the repository maintainer, I want automated accessibility smoke checks plus explicit keyboard and responsive-review gates, so that visual polish cannot hide basic usability regressions. | pass | Automated state/route accessibility checks passed; phone/desktop, focus, and programmatic-state gates passed; the manual review gate is checked in separately. |
+| 27 | As the launch owner, I want the public default branches of CodeAtlas and Northstar reverified immediately before promotion, so that Built reflects current external evidence rather than an earlier audit. | pass | Hardening re-ran the unauthenticated live verifier immediately and recorded the current default branches and revisions above. |
+| 28 | As the launch owner, I want promotion to wait until every condition in the canonical launch gate passes, so that deployment is never confused with Launch. | pass | The central state remained Public draft with `noindex`; the manual checklist is unchecked and no promotion was performed. |
+
+### Between-the-slices checks
+
+| Flow | Verdict | Observed evidence |
+|---|---|---|
+| Live evidence revision → rendered Built classification and claim | pass | Immutable evidence checks passed at the recorded public revisions before the production page's two classifications and claims were accepted. |
+| Draft filtering → generated routes → navigation → Public draft metadata | pass | Only three pages were generated; draft/tag routes returned 404, Writing stayed out of navigation, and every surviving page carried noindex/canonical metadata. |
+| OS theme → persistent override → route navigation → accessibility | pass | The initial frame followed OS state, override survived navigation/reload, and Axe passed both Dawn and Moon. |
+| Parser valid/error states → focus/ARIA → narrow-screen containment | pass | Valid trees, every invalid class, focus retention, error announcement/state, and contained horizontal scrolling all passed through the browser. |
+| Candidate workflow from frozen install through live evidence, build, and browser suite | unverifiable | Every command passed locally and CI orders them in one job, but the candidate has not been pushed and therefore has no actual CI execution. |
+| Human keyboard, focus-order, 200% zoom, and physical narrow-screen review | unverifiable | `docs/pre-launch-checklist.md` defines the gate, but no human reviewer has completed and recorded it for this candidate. |
+| Public draft → canonical launch gate → promotion decision | pass | The checklist mirrors the canonical gate, remains unchecked, and the site still emits noindex; deployment/promotion was not inferred from a successful build. |
+
+### Unverifiable items and ship status
+
+- Story 24 and the combined CI flow need this candidate pushed and a successful
+  CI run URL recorded.
+- The human review flow needs a named reviewer to complete and record the
+  manual checklist against the candidate.
+
+Story 5 failed because StarScript's newly public availability made the static
+Current work availability copy stale. The diagnosed fix is routed to ticket 08;
+hardening did not implement it inline.
+
+No user acceptance of these unverifiable items has been recorded. Under the
+hardening rule, this candidate is therefore **not yet shipped** and must remain
+the unpromoted Public draft with `noindex`.
