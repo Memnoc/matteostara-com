@@ -8,19 +8,18 @@ controlled statement of the site's current status and identity.
 
 **Blocked by:** 01 — Establish the production-browser verification seam
 
-**Status:** ready
+**Status:** done
 
-- [ ] Every generated Public draft page emits a robots `noindex` directive and
+- [x] Every generated Public draft page emits a robots `noindex` directive and
   remains crawlable; no `robots.txt` rule prevents observing the directive.
-- [ ] A single site-state control removes `noindex` for a future Launch without
+- [x] A single site-state control removes `noindex` for a future Launch without
   requiring page-by-page edits.
-- [ ] Every generated page emits an absolute canonical URL for `memnoc.dev`.
-- [ ] Shared Open Graph and social metadata uses the page's actual title,
+- [x] Every generated page emits an absolute canonical URL for `memnoc.dev`.
+- [x] Shared Open Graph and social metadata uses the page's actual title,
   description, canonical URL, and an appropriate site identity.
-- [ ] The initial theme follows the operating-system preference without a
+- [x] The initial theme follows the operating-system preference without a
   wrong-theme flash, and a manual Dawn/Moon choice persists across navigation
   and reloads.
-- [ ] The theme control exposes an accessible name and current state.
-- [ ] Production-browser tests cover `noindex`, canonical/social metadata, and
+- [x] The theme control exposes an accessible name and current state.
+- [x] Production-browser tests cover `noindex`, canonical/social metadata, and
   theme persistence through observable page behavior.
-

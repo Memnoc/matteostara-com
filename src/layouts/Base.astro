@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SITE_IDENTITY, SITE_ORIGIN, SITE_STATE } from '../site';
 
 declare const __GIT_HASH__: string;
 
@@ -16,6 +17,8 @@ const {
 } = Astro.props;
 
 const gitHash = __GIT_HASH__;
+const canonicalPath = currentPath === '/' ? '/' : `${currentPath.replace(/\/$/, '')}/`;
+const canonicalUrl = new URL(canonicalPath, SITE_ORIGIN).href;
 ---
 
 <!doctype html>
@@ -24,7 +27,17 @@ const gitHash = __GIT_HASH__;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {SITE_STATE === 'public-draft' && <meta name="robots" content="noindex, follow" />}
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_IDENTITY} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <!-- Apply theme before first paint to prevent flash -->
@@ -57,7 +70,7 @@ const gitHash = __GIT_HASH__;
         <a href="/about" class:list={[{ active: currentPath === '/about' }]}>about</a>
         <a href="/writing" class:list={[{ active: currentPath.startsWith('/writing') }]}>writing</a>
       </div>
-      <button id="theme-toggle" aria-label="Toggle theme">
+      <button id="theme-toggle" aria-label="Theme" aria-pressed="false">
         <svg class="icon-dawn" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <circle cx="12" cy="12" r="4"/>
           <line x1="12" y1="2" x2="12" y2="5"/>
@@ -81,11 +94,19 @@ const gitHash = __GIT_HASH__;
     <script>
       const btn = document.getElementById('theme-toggle');
 
+      function updateThemeControl(theme: string) {
+        btn?.setAttribute('aria-label', `Theme: ${theme === 'moon' ? 'Moon' : 'Dawn'}`);
+        btn?.setAttribute('aria-pressed', String(theme === 'moon'));
+      }
+
+      updateThemeControl(document.documentElement.getAttribute('data-theme') ?? 'dawn');
+
       btn?.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme');
         const next = current === 'moon' ? 'dawn' : 'moon';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('rp-theme', next);
+        updateThemeControl(next);
       });
 
       const clock = document.getElementById('utc-clock');
